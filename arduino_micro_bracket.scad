@@ -24,7 +24,7 @@ object_width_start = (bracket_width - object_width) / 2;
 
 // Pin cutout
 pin_width = 17.77;
-pin_length = 43.1;
+pin_length = 43.3;
 pin_height = 12;
 pin_width_start = (bracket_width - pin_width) / 2; 
 pin_length_start = (bracket_length - pin_length) / 2;   // mm
