@@ -2,7 +2,10 @@
 // Bracket dimensions
 bracket_width  = 20;  // mm
 bracket_length = 48;  // mm
-bracket_height = 4;   // mm
+bracket_height = 12.5;   // mm
+
+clamp_height = 0.6;
+clamp_length = 2;
 
 // Object dimensions (the recess cutout)
 // For example: 18mm wide, 20mm long, 1.5mm tall
@@ -12,6 +15,7 @@ object_length = 48.27;   // mm
 object_length_start = (bracket_length - object_length) / 2;   // mm
 
 object_height = 1.76;  // mm
+object_height_start = bracket_height - object_height - clamp_height;
 object_allowance = 0.1;
 object_height_allowance = object_height + (object_allowance * 2);
 
@@ -40,14 +44,25 @@ difference() {
     // and positioned so that the recess is on the top surface (starting at 4-1.5 = 2.5mm high)
     
     // The allowance for the board
-    translate([object_width_start, object_length_start-extend_margin, 1.8])
+    translate([object_width_start, object_length_start-extend_margin, object_height_start])
         cube([object_width_allowance, object_length + extend_margin, object_height_allowance]);
     
    // Allowance for Pins
-   translate([pin_width_start, pin_length_start, 2.62])
+   translate([pin_width_start, pin_length_start, object_height_start])
         cube([pin_width_allowance, pin_length, pin_height]);
     
    // Break through the middle
-   translate([clamp_width_start, object_length_start-extend_margin, 2.62])
-        cube([clamp_width_gap, object_length + extend_margin, pin_height]);
+   translate([clamp_width_start, object_length_start-extend_margin, 1])
+        cube([clamp_width_gap, object_length + extend_margin, pin_height - object_height]);
+    
+   // Space removal for clamp
+   translate([clamp_width_start + clamp_length, object_length_start-extend_margin, 1])
+        cube([clamp_width_gap - (clamp_length * 2), object_length + extend_margin, pin_height]);
+    
+    // Holes in the base
+    translate([bracket_width/2, 10, 0])
+        cylinder(d=3, h=bracket_height, $fn=50);
+    translate([bracket_width/2, bracket_length - 10, 0])
+        cylinder(d=3, h=bracket_height, $fn=50);
+
 }
