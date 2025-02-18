@@ -2,10 +2,10 @@
 // Bracket dimensions
 bracket_width  = 20;  // mm
 bracket_length = 48;  // mm
-bracket_height = 12.5;   // mm
+bracket_height = 13;   // mm
 
-clamp_height = 0.6;
-clamp_length = 2;
+clamp_height = 0.7;
+clamp_length = 1.5;
 
 // Object dimensions (the recess cutout)
 // For example: 18mm wide, 20mm long, 1.5mm tall
@@ -14,7 +14,7 @@ object_width  = 17.75;   // mm
 object_length = 48.27;   // mm
 object_length_start = (bracket_length - object_length) / 2;   // mm
 
-object_height = 1.76;  // mm
+object_height = 1.8;  // mm
 object_height_start = bracket_height - object_height - clamp_height;
 object_allowance = 0.1;
 object_height_allowance = object_height + (object_allowance * 2);
@@ -34,6 +34,7 @@ clamp_width = 0.6;
 clamp_width_start = pin_width_start + clamp_width; 
 clamp_width_gap = pin_width_allowance - (clamp_width * 2);
 
+hole_spacing_from_edge = 12;
 
 difference() {
     // Base bracket: 20mm (width) x 20mm (length) x 4mm (height)
@@ -60,9 +61,9 @@ difference() {
         cube([clamp_width_gap - (clamp_length * 2), object_length + extend_margin, pin_height]);
     
     // Holes in the base
-    translate([bracket_width/2, 10, 0])
+    translate([bracket_width/2, hole_spacing_from_edge, 0])
         cylinder(d=3, h=bracket_height, $fn=50);
-    translate([bracket_width/2, bracket_length - 10, 0])
+    translate([bracket_width/2, bracket_length - hole_spacing_from_edge, 0])
         cylinder(d=3, h=bracket_height, $fn=50);
 
 }
